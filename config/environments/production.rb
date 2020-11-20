@@ -62,6 +62,9 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
+  # Devise
+  # config.action_mailer.default_url_options = { host: 'ec2-52-62-38-246.ap-southeast-2.compute.amazonaws.com', port: 3000 }
+
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
