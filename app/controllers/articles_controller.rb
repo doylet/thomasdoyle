@@ -1,11 +1,15 @@
 class ArticlesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_article, only: [:show, :edit, :update, :destroy]
-
+  before_action :get_article, only: [:index]
+  
+  
+  
+  
   # GET /articles
   # GET /articles.json
   def index
-    @articles = Article.where.not(published_at: nil)
+    # @articles
   end
 
   # GET /articles/1
@@ -28,6 +32,7 @@ class ArticlesController < ApplicationController
     @article = Article.new(article_params)
 
     respond_to do |format|
+      # if article is :publish then set :published_at = date now
       if @article.save
         format.html { redirect_to @article, notice: 'Article was successfully created.' }
         format.json { render :show, status: :created, location: @article }
@@ -41,6 +46,7 @@ class ArticlesController < ApplicationController
   # PATCH/PUT /articles/1
   # PATCH/PUT /articles/1.json
   def update
+    # if :published is false then delete
     respond_to do |format|
       if @article.update(article_params)
         format.html { redirect_to @article, notice: 'Article was successfully updated.' }
@@ -68,8 +74,17 @@ class ArticlesController < ApplicationController
       @article = Article.find(params[:id])
     end
 
+    def get_article
+      @articles = Article.where.not(published_at: nil)
+    end
+
     # Only allow a list of trusted parameters through.
     def article_params
-      params.require(:article).permit(:title, :body)
+      params.require(:article).permit(:title, :body, :publish)
+    end
+
+    # setter
+    def publish=(value)
+      @publish = params[:publish]
     end
 end
